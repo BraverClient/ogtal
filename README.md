@@ -17,3 +17,5 @@
           - textures/
           - icons/
           - sounds/
+Intricate digital core, high-geometry network, interwoven code streams, advanced software interface, glowing circuits, cloud data transfer, polished metallic surfaces, cosmic technology, distributed computing, vibrant energy flows, metallic textures, starfield backdrop, computer script overlay.  
+Cyberpunk cityscape, glowing skyscrapers, flying vehicles, neon-lit streets, atmospheric perspective, dynamic viewing angles, interactive energy pulses, customizable color themes, reflections, ultra-detailed, cinematic, 8k.
