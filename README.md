@@ -1,1 +1,19 @@
 # ogtal
+/ogtal-core-system/
+  - README.md
+  - docs/
+      - concept_overview.md
+      - feature_list.md
+  - src/
+      - core/
+          - geometryEngine.js
+          - codeFlowVisualizer.js
+          - networkHub.js
+      - ui/
+          - 3dCityScene.vue
+          - colorThemeSwitcher.vue
+          - controlsPanel.vue
+      - assets/
+          - textures/
+          - icons/
+          - sounds/
