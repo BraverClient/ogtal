@@ -185,72 +185,10 @@
             background: rgba(0, 20, 40, 0.95);
             border: 3px solid #00ffff;
             border-radius: 15px;
+            padding: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
             min-width: 280px;
-            transition: all 0.3s ease;
-            overflow: hidden;
-        }
-        
-        .control-panel.collapsed {
-            min-width: 250px;
-        }
-        
-        .control-panel-content {
-            padding: 25px;
-            transition: all 0.3s ease;
-            max-height: 1000px;
-            opacity: 1;
-        }
-        
-        .control-panel.collapsed .control-panel-content {
-            max-height: 0;
-            overflow: hidden;
-            padding: 0 25px;
-            opacity: 0;
-        }
-        
-        .control-toggle {
-            background: linear-gradient(45deg, #00ffff, #0088cc);
-            border: none;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Orbitron', monospace;
-            font-size: 14px;
-            font-weight: 700;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
-            margin-bottom: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .control-toggle:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
-        }
-        
-        .control-toggle.collapsed {
-            background: linear-gradient(45deg, #ff00ff, #cc0088);
-            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
-        }
-        
-        .control-toggle::after {
-            content: '▼';
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            transition: transform 0.3s ease;
-        }
-        
-        .control-toggle.collapsed::after {
-            transform: translateY(-50%) rotate(180deg);
         }
         
         .control-header {
@@ -325,86 +263,6 @@
         
         .btn:active {
             transform: scale(0.95);
-        }
-        
-        .custom-functions {
-            margin-top: 20px;
-            padding-top: 15px;
-            border-top: 2px solid rgba(0, 255, 255, 0.3);
-        }
-        
-        .custom-functions-label {
-            display: block;
-            margin-bottom: 12px;
-            font-size: 13px;
-            color: #00ffff;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            text-align: center;
-        }
-        
-        .custom-buttons {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-        
-        .custom-btn {
-            background: linear-gradient(45deg, #1a1a2e, #16213e);
-            border: 2px solid #00ffff;
-            color: #00ffff;
-            padding: 12px 8px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Orbitron', monospace;
-            font-size: 9px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            min-height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .custom-btn:hover {
-            background: linear-gradient(45deg, #00ffff, #0088cc);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
-        }
-        
-        .custom-btn.active {
-            background: linear-gradient(45deg, #ff00ff, #cc0088);
-            border-color: #ff00ff;
-            color: white;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
-            animation: activeGlow 2s ease-in-out infinite;
-        }
-        
-        .custom-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-        
-        .custom-btn:hover::before {
-            left: 100%;
-        }
-        
-        @keyframes activeGlow {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.6); }
-            50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.8); }
         }
         
         .status-display {
@@ -719,54 +577,39 @@
         
         <div class="geometric-pattern" id="geometricPattern"></div>
         
-        <div class="control-panel" id="controlPanel">
-            <button class="control-toggle" id="controlToggle" onclick="toggleControlPanel()">
-                CORE CONTROL MATRIX
-            </button>
+        <div class="control-panel">
+            <div class="control-header">CORE CONTROL MATRIX</div>
             
-            <div class="control-panel-content" id="controlContent">
-                <div class="control-group">
-                    <label>Core Rotation Speed</label>
-                    <input type="range" class="slider" id="coreSpeed" min="1" max="30" value="12">
-                </div>
-                
-                <div class="control-group">
-                    <label>Network Node Density</label>
-                    <input type="range" class="slider" id="networkDensity" min="20" max="150" value="75">
-                </div>
-                
-                <div class="control-group">
-                    <label>Energy Flow Intensity</label>
-                    <input type="range" class="slider" id="energyFlow" min="1" max="15" value="8">
-                </div>
-                
-                <div class="control-group">
-                    <label>Particle Generation</label>
-                    <input type="range" class="slider" id="particleRate" min="1" max="20" value="10">
-                </div>
-                
-                <div class="control-group">
-                    <button class="btn" onclick="toggleMode('cyberpunk')">CYBERPUNK</button>
-                    <button class="btn" onclick="toggleMode('matrix')">MATRIX</button>
-                    <button class="btn" onclick="toggleMode('quantum')">QUANTUM</button>
-                </div>
-                
-                <div class="control-group">
-                    <button class="btn" onclick="generateParticles()">CORE BOOST</button>
-                    <button class="btn" onclick="createEnergyWave()">ENERGY WAVE</button>
-                    <button class="btn" onclick="resetSystem()">SYSTEM RESET</button>
-                </div>
-                
-                <div class="custom-functions">
-                    <label class="custom-functions-label">Custom Functions</label>
-                    <div class="custom-buttons">
-                        <button class="custom-btn" id="customBtn1" onclick="toggleCustomFunction(1)">NEURAL SYNC</button>
-                        <button class="custom-btn" id="customBtn2" onclick="toggleCustomFunction(2)">QUANTUM LOCK</button>
-                        <button class="custom-btn" id="customBtn3" onclick="toggleCustomFunction(3)">DATA MINE</button>
-                        <button class="custom-btn" id="customBtn4" onclick="toggleCustomFunction(4)">AI ENHANCE</button>
-                        <button class="custom-btn" id="customBtn5" onclick="toggleCustomFunction(5)">CYBER SHIELD</button>
-                    </div>
-                </div>
+            <div class="control-group">
+                <label>Core Rotation Speed</label>
+                <input type="range" class="slider" id="coreSpeed" min="1" max="30" value="12">
+            </div>
+            
+            <div class="control-group">
+                <label>Network Node Density</label>
+                <input type="range" class="slider" id="networkDensity" min="20" max="150" value="75">
+            </div>
+            
+            <div class="control-group">
+                <label>Energy Flow Intensity</label>
+                <input type="range" class="slider" id="energyFlow" min="1" max="15" value="8">
+            </div>
+            
+            <div class="control-group">
+                <label>Particle Generation</label>
+                <input type="range" class="slider" id="particleRate" min="1" max="20" value="10">
+            </div>
+            
+            <div class="control-group">
+                <button class="btn" onclick="toggleMode('cyberpunk')">CYBERPUNK</button>
+                <button class="btn" onclick="toggleMode('matrix')">MATRIX</button>
+                <button class="btn" onclick="toggleMode('quantum')">QUANTUM</button>
+            </div>
+            
+            <div class="control-group">
+                <button class="btn" onclick="generateParticles()">CORE BOOST</button>
+                <button class="btn" onclick="createEnergyWave()">ENERGY WAVE</button>
+                <button class="btn" onclick="resetSystem()">SYSTEM RESET</button>
             </div>
         </div>
         
@@ -806,14 +649,6 @@
         let energyLevel = 8;
         let particleRate = 10;
         let systemActive = true;
-        let controlPanelOpen = true;
-        let customFunctions = {
-            1: { active: false, name: 'NEURAL SYNC' },
-            2: { active: false, name: 'QUANTUM LOCK' },
-            3: { active: false, name: 'DATA MINE' },
-            4: { active: false, name: 'AI ENHANCE' },
-            5: { active: false, name: 'CYBER SHIELD' }
-        };
         
         // Enhanced code streams with more variety
         const advancedCodeTexts = [
@@ -1154,20 +989,6 @@
                 50% { opacity: 1; }
                 100% { opacity: 0; }
             }
-            
-            @keyframes neuralPulse {
-                0%, 100% { 
-                    box-shadow: 0 0 150px #00ffff, inset 0 0 80px rgba(255, 0, 255, 0.5);
-                }
-                50% { 
-                    box-shadow: 0 0 200px #ff00ff, inset 0 0 100px rgba(0, 255, 255, 0.7);
-                }
-            }
-            
-            @keyframes shieldRotate {
-                0% { transform: translate(-50%, -50%) rotate(0deg); }
-                100% { transform: translate(-50%, -50%) rotate(360deg); }
-            }
         `;
         document.head.appendChild(style);
         
@@ -1178,109 +999,6 @@
         window.addEventListener('resize', () => {
             setTimeout(createEnhancedNetworkNodes, 100);
         });
-        
-        // Toggle control panel
-        function toggleControlPanel() {
-            const panel = document.getElementById('controlPanel');
-            const toggle = document.getElementById('controlToggle');
-            
-            controlPanelOpen = !controlPanelOpen;
-            
-            if (controlPanelOpen) {
-                panel.classList.remove('collapsed');
-                toggle.classList.remove('collapsed');
-                toggle.innerHTML = 'CORE CONTROL MATRIX';
-            } else {
-                panel.classList.add('collapsed');
-                toggle.classList.add('collapsed');
-                toggle.innerHTML = 'OPEN CONTROLS';
-            }
-        }
-        
-        // Toggle custom functions
-        function toggleCustomFunction(id) {
-            const btn = document.getElementById(`customBtn${id}`);
-            const func = customFunctions[id];
-            
-            func.active = !func.active;
-            
-            if (func.active) {
-                btn.classList.add('active');
-                activateCustomFunction(id);
-            } else {
-                btn.classList.remove('active');
-                deactivateCustomFunction(id);
-            }
-        }
-        
-        // Activate custom function effects
-        function activateCustomFunction(id) {
-            const core = document.getElementById('digitalCore');
-            
-            switch(id) {
-                case 1: // NEURAL SYNC
-                    core.style.animation += ', neuralPulse 1s ease-in-out infinite';
-                    break;
-                case 2: // QUANTUM LOCK
-                    document.querySelectorAll('.core-ring').forEach(ring => {
-                        ring.style.animationPlayState = 'paused';
-                    });
-                    break;
-                case 3: // DATA MINE
-                    // Increase code stream frequency
-                    advancedCodeTexts.push('DATA_MINING_ACTIVE', 'EXTRACTING_INFORMATION', 'BLOCKCHAIN_ANALYSIS');
-                    break;
-                case 4: // AI ENHANCE
-                    core.style.filter += ' saturate(1.5) contrast(1.2)';
-                    break;
-                case 5: // CYBER SHIELD
-                    const shield = document.createElement('div');
-                    shield.id = 'cyberShield';
-                    shield.style.cssText = `
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        width: 500px;
-                        height: 500px;
-                        border: 3px solid rgba(0, 255, 255, 0.5);
-                        border-radius: 50%;
-                        animation: shieldRotate 3s linear infinite;
-                        pointer-events: none;
-                    `;
-                    document.querySelector('.container').appendChild(shield);
-                    break;
-            }
-        }
-        
-        // Deactivate custom function effects
-        function deactivateCustomFunction(id) {
-            const core = document.getElementById('digitalCore');
-            
-            switch(id) {
-                case 1: // NEURAL SYNC
-                    core.style.animation = core.style.animation.replace(', neuralPulse 1s ease-in-out infinite', '');
-                    break;
-                case 2: // QUANTUM LOCK
-                    document.querySelectorAll('.core-ring').forEach(ring => {
-                        ring.style.animationPlayState = 'running';
-                    });
-                    break;
-                case 3: // DATA MINE
-                    // Remove added code streams
-                    advancedCodeTexts = advancedCodeTexts.filter(text => 
-                        !['DATA_MINING_ACTIVE', 'EXTRACTING_INFORMATION', 'BLOCKCHAIN_ANALYSIS'].includes(text)
-                    );
-                    break;
-                case 4: // AI ENHANCE
-                    core.style.filter = core.style.filter.replace(' saturate(1.5) contrast(1.2)', '');
-                    break;
-                case 5: // CYBER SHIELD
-                    const shield = document.getElementById('cyberShield');
-                    if (shield) shield.remove();
-                    break;
-            }
-        }
         
         // Add mouse interaction effects
         document.addEventListener('mousemove', (e) => {
@@ -1298,5 +1016,5 @@
             }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dc51eb7e02722',t:'MTc1Mjk2NTM0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dbc9517c78d4a',t:'MTc1Mjk2NDk5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
