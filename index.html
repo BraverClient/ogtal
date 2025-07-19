@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Digital Ogtal Core System</title>
+    <title>Futuristic Core Control Matrix</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
         
@@ -180,60 +180,159 @@
         
         .control-panel {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0, 20, 40, 0.95);
+            top: 30px;
+            left: 30px;
+            background: rgba(0, 15, 30, 0.95);
             border: 3px solid #00ffff;
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 0 40px rgba(0, 255, 255, 0.4),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+            min-width: 320px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+        
+        .control-panel.collapsed {
             min-width: 280px;
+        }
+        
+        .control-panel-content {
+            padding: 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-height: 800px;
+            opacity: 1;
+        }
+        
+        .control-panel.collapsed .control-panel-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 30px;
+            opacity: 0;
+        }
+        
+        .control-toggle {
+            background: linear-gradient(135deg, #00ffff 0%, #0088cc 50%, #004466 100%);
+            border: none;
+            color: white;
+            padding: 18px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 16px;
+            font-weight: 900;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 6px 20px rgba(0, 255, 255, 0.4),
+                inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 10px 30px rgba(0, 255, 255, 0.6),
+                inset 0 2px 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .control-toggle.collapsed {
+            background: linear-gradient(135deg, #ff00ff 0%, #cc0088 50%, #660044 100%);
+            box-shadow: 
+                0 6px 20px rgba(255, 0, 255, 0.4),
+                inset 0 2px 10px rgba(255, 255, 255, 0.2);
+        }
+        
+        .control-toggle::after {
+            content: '▼';
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 14px;
+        }
+        
+        .control-toggle.collapsed::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .control-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .control-toggle:hover::before {
+            left: 100%;
         }
         
         .control-header {
             text-align: center;
-            margin-bottom: 20px;
-            font-size: 16px;
+            margin-bottom: 25px;
+            font-size: 18px;
             font-weight: 900;
             color: #00ffff;
-            text-shadow: 0 0 10px currentColor;
-            letter-spacing: 2px;
+            text-shadow: 0 0 15px currentColor;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         
         .control-group {
-            margin-bottom: 18px;
+            margin-bottom: 20px;
         }
         
         .control-group label {
             display: block;
-            margin-bottom: 8px;
-            font-size: 13px;
+            margin-bottom: 10px;
+            font-size: 14px;
             color: #00ffff;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
         
         .slider {
             width: 100%;
-            height: 8px;
-            background: linear-gradient(90deg, #333, #666);
-            border-radius: 10px;
+            height: 10px;
+            background: linear-gradient(90deg, #1a1a2e, #16213e, #0f3460);
+            border-radius: 15px;
             outline: none;
             -webkit-appearance: none;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+            box-shadow: 
+                inset 0 0 15px rgba(0, 0, 0, 0.7),
+                0 0 10px rgba(0, 255, 255, 0.3);
         }
         
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(circle, #00ffff, #0088cc);
+            width: 24px;
+            height: 24px;
+            background: radial-gradient(circle, #ffffff 0%, #00ffff 50%, #0088cc 100%);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 15px #00ffff;
-            border: 2px solid #ffffff;
+            box-shadow: 
+                0 0 20px #00ffff,
+                0 4px 10px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+            transition: all 0.2s ease;
+        }
+        
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 
+                0 0 30px #00ffff,
+                0 6px 15px rgba(0, 0, 0, 0.7);
         }
         
         .btn {
@@ -241,23 +340,23 @@
             background-size: 300% 300%;
             border: none;
             color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
+            padding: 14px 22px;
+            border-radius: 10px;
             cursor: pointer;
             font-family: 'Orbitron', monospace;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 700;
-            margin: 3px;
+            margin: 4px;
             transition: all 0.3s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             animation: gradientShift 3s ease infinite;
-            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.4);
         }
         
         .btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 255, 0.6);
             animation-duration: 1s;
         }
         
@@ -265,36 +364,132 @@
             transform: scale(0.95);
         }
         
+        .custom-functions {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .custom-functions-label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #00ffff;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            text-shadow: 0 0 10px currentColor;
+        }
+        
+        .custom-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        
+        .custom-btn {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 15px 10px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 4px 15px rgba(0, 255, 255, 0.2),
+                inset 0 1px 5px rgba(255, 255, 255, 0.1);
+        }
+        
+        .custom-btn:hover {
+            background: linear-gradient(135deg, #00ffff 0%, #0088cc 50%, #004466 100%);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 
+                0 8px 25px rgba(0, 255, 255, 0.5),
+                inset 0 2px 10px rgba(255, 255, 255, 0.2);
+            border-color: #ffffff;
+        }
+        
+        .custom-btn.active {
+            background: linear-gradient(135deg, #ff00ff 0%, #cc0088 50%, #660044 100%);
+            border-color: #ff00ff;
+            color: white;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 255, 0.8),
+                inset 0 2px 10px rgba(255, 255, 255, 0.3);
+            animation: activeGlow 2s ease-in-out infinite;
+        }
+        
+        .custom-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+        
+        .custom-btn:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes activeGlow {
+            0%, 100% { 
+                box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), inset 0 2px 10px rgba(255, 255, 255, 0.3);
+            }
+            50% { 
+                box-shadow: 0 0 50px rgba(255, 0, 255, 1), inset 0 2px 15px rgba(255, 255, 255, 0.4);
+            }
+        }
+        
         .status-display {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0, 20, 40, 0.95);
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 15, 30, 0.95);
             border: 3px solid #ff00ff;
-            border-radius: 15px;
-            padding: 20px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
-            min-width: 250px;
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 0 40px rgba(255, 0, 255, 0.4),
+                inset 0 0 20px rgba(255, 0, 255, 0.1);
+            min-width: 280px;
         }
         
         .status-header {
             text-align: center;
-            margin-bottom: 15px;
-            font-size: 14px;
+            margin-bottom: 20px;
+            font-size: 16px;
             font-weight: 900;
             color: #ff00ff;
-            text-shadow: 0 0 10px currentColor;
-            letter-spacing: 2px;
+            text-shadow: 0 0 15px currentColor;
+            letter-spacing: 3px;
+            text-transform: uppercase;
         }
         
         .status-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 12px;
-            padding: 5px 0;
-            border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+            margin-bottom: 12px;
+            font-size: 13px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.3);
         }
         
         .status-label {
@@ -305,7 +500,7 @@
         .status-value {
             color: #00ff00;
             font-weight: bold;
-            text-shadow: 0 0 5px currentColor;
+            text-shadow: 0 0 8px currentColor;
         }
         
         .particle {
@@ -352,16 +547,17 @@
         
         .hologram-text {
             position: absolute;
-            top: 20px;
+            top: 30px;
             right: 50%;
             transform: translateX(50%);
             font-family: 'Orbitron', monospace;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 900;
             color: #00ffff;
-            text-shadow: 0 0 20px currentColor;
+            text-shadow: 0 0 25px currentColor;
             animation: hologramFlicker 2s ease-in-out infinite;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
         
         @keyframes coreRotate {
@@ -519,11 +715,11 @@
         @keyframes hologramFlicker {
             0%, 100% { 
                 opacity: 1;
-                text-shadow: 0 0 20px #00ffff;
+                text-shadow: 0 0 25px #00ffff;
             }
             50% { 
                 opacity: 0.8;
-                text-shadow: 0 0 30px #00ffff, 0 0 40px #ff00ff;
+                text-shadow: 0 0 35px #00ffff, 0 0 45px #ff00ff;
             }
         }
         
@@ -531,6 +727,37 @@
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes neuralPulse {
+            0%, 100% { 
+                box-shadow: 0 0 150px #00ffff, inset 0 0 80px rgba(255, 0, 255, 0.5);
+            }
+            50% { 
+                box-shadow: 0 0 250px #ff00ff, inset 0 0 120px rgba(0, 255, 255, 0.8);
+            }
+        }
+        
+        @keyframes shieldRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes particleBurst {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--burst-x, 0), var(--burst-y, 0)) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes resetFlash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
         }
         
         @media (max-width: 768px) {
@@ -549,12 +776,16 @@
             }
             
             .control-panel, .status-display {
-                padding: 15px;
-                min-width: 200px;
+                padding: 20px;
+                min-width: 250px;
             }
             
             .hologram-text {
-                font-size: 18px;
+                font-size: 20px;
+            }
+            
+            .custom-buttons {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -564,7 +795,7 @@
         <div class="cyberpunk-bg"></div>
         <div class="scan-line"></div>
         
-        <div class="hologram-text">DIGITAL OGTAL CORE</div>
+        <div class="hologram-text">Core Control Matrix</div>
         
         <div class="digital-core" id="digitalCore">
             <div class="core-rings">
@@ -577,44 +808,61 @@
         
         <div class="geometric-pattern" id="geometricPattern"></div>
         
-        <div class="control-panel">
-            <div class="control-header">CORE CONTROL MATRIX</div>
+        <div class="control-panel" id="controlPanel">
+            <button class="control-toggle" id="controlToggle" onclick="toggleControlPanel()">
+                Core Control Matrix
+            </button>
             
-            <div class="control-group">
-                <label>Core Rotation Speed</label>
-                <input type="range" class="slider" id="coreSpeed" min="1" max="30" value="12">
-            </div>
-            
-            <div class="control-group">
-                <label>Network Node Density</label>
-                <input type="range" class="slider" id="networkDensity" min="20" max="150" value="75">
-            </div>
-            
-            <div class="control-group">
-                <label>Energy Flow Intensity</label>
-                <input type="range" class="slider" id="energyFlow" min="1" max="15" value="8">
-            </div>
-            
-            <div class="control-group">
-                <label>Particle Generation</label>
-                <input type="range" class="slider" id="particleRate" min="1" max="20" value="10">
-            </div>
-            
-            <div class="control-group">
-                <button class="btn" onclick="toggleMode('cyberpunk')">CYBERPUNK</button>
-                <button class="btn" onclick="toggleMode('matrix')">MATRIX</button>
-                <button class="btn" onclick="toggleMode('quantum')">QUANTUM</button>
-            </div>
-            
-            <div class="control-group">
-                <button class="btn" onclick="generateParticles()">CORE BOOST</button>
-                <button class="btn" onclick="createEnergyWave()">ENERGY WAVE</button>
-                <button class="btn" onclick="resetSystem()">SYSTEM RESET</button>
+            <div class="control-panel-content" id="controlContent">
+                <div class="control-header">System Controls</div>
+                
+                <div class="control-group">
+                    <label>Core Rotation Speed</label>
+                    <input type="range" class="slider" id="coreSpeed" min="1" max="30" value="12">
+                </div>
+                
+                <div class="control-group">
+                    <label>Network Node Density</label>
+                    <input type="range" class="slider" id="networkDensity" min="20" max="150" value="75">
+                </div>
+                
+                <div class="control-group">
+                    <label>Energy Flow Intensity</label>
+                    <input type="range" class="slider" id="energyFlow" min="1" max="15" value="8">
+                </div>
+                
+                <div class="control-group">
+                    <label>Particle Generation</label>
+                    <input type="range" class="slider" id="particleRate" min="1" max="20" value="10">
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn" onclick="toggleMode('cyberpunk')">Cyberpunk</button>
+                    <button class="btn" onclick="toggleMode('matrix')">Matrix</button>
+                    <button class="btn" onclick="toggleMode('quantum')">Quantum</button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn" onclick="generateParticles()">Core Boost</button>
+                    <button class="btn" onclick="createEnergyWave()">Energy Wave</button>
+                    <button class="btn" onclick="resetSystem()">System Reset</button>
+                </div>
+                
+                <div class="custom-functions">
+                    <label class="custom-functions-label">Advanced Functions</label>
+                    <div class="custom-buttons">
+                        <button class="custom-btn" id="customBtn1" onclick="toggleCustomFunction(1)">Neural Sync</button>
+                        <button class="custom-btn" id="customBtn2" onclick="toggleCustomFunction(2)">Quantum Lock</button>
+                        <button class="custom-btn" id="customBtn3" onclick="toggleCustomFunction(3)">Data Mine</button>
+                        <button class="custom-btn" id="customBtn4" onclick="toggleCustomFunction(4)">AI Enhance</button>
+                        <button class="custom-btn" id="customBtn5" onclick="toggleCustomFunction(5)">Cyber Shield</button>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div class="status-display">
-            <div class="status-header">SYSTEM DIAGNOSTICS</div>
+            <div class="status-header">System Diagnostics</div>
             <div class="status-item">
                 <span class="status-label">Core Temperature:</span>
                 <span class="status-value" id="coreTemp">3247°K</span>
@@ -629,15 +877,15 @@
             </div>
             <div class="status-item">
                 <span class="status-label">Quantum State:</span>
-                <span class="status-value" id="quantumState">COHERENT</span>
+                <span class="status-value" id="quantumState">Coherent</span>
             </div>
             <div class="status-item">
                 <span class="status-label">Security Level:</span>
-                <span class="status-value" id="security">MAXIMUM</span>
+                <span class="status-value" id="security">Maximum</span>
             </div>
             <div class="status-item">
                 <span class="status-label">AI Consciousness:</span>
-                <span class="status-value" id="aiLevel">LEVEL 9</span>
+                <span class="status-value" id="aiLevel">Level 9</span>
             </div>
         </div>
     </div>
@@ -649,6 +897,14 @@
         let energyLevel = 8;
         let particleRate = 10;
         let systemActive = true;
+        let controlPanelOpen = true;
+        let customFunctions = {
+            1: { active: false, name: 'Neural Sync' },
+            2: { active: false, name: 'Quantum Lock' },
+            3: { active: false, name: 'Data Mine' },
+            4: { active: false, name: 'AI Enhance' },
+            5: { active: false, name: 'Cyber Shield' }
+        };
         
         // Enhanced code streams with more variety
         const advancedCodeTexts = [
@@ -886,21 +1142,18 @@
                     core.style.boxShadow = '0 0 150px #00ffff, inset 0 0 80px rgba(255, 0, 255, 0.5), 0 0 300px rgba(0, 255, 255, 0.3)';
                     body.style.background = '#000';
                     hologram.style.color = '#00ffff';
-                    document.documentElement.style.setProperty('--primary-color', '#00ffff');
                     break;
                 case 'matrix':
                     core.style.borderColor = '#00ff00';
                     core.style.boxShadow = '0 0 150px #00ff00, inset 0 0 80px rgba(0, 255, 0, 0.5), 0 0 300px rgba(0, 255, 0, 0.3)';
                     body.style.background = '#001100';
                     hologram.style.color = '#00ff00';
-                    document.documentElement.style.setProperty('--primary-color', '#00ff00');
                     break;
                 case 'quantum':
                     core.style.borderColor = '#ff00ff';
                     core.style.boxShadow = '0 0 150px #ff00ff, inset 0 0 80px rgba(255, 255, 0, 0.5), 0 0 300px rgba(255, 0, 255, 0.3)';
                     body.style.background = '#110011';
                     hologram.style.color = '#ff00ff';
-                    document.documentElement.style.setProperty('--primary-color', '#ff00ff');
                     break;
             }
         }
@@ -911,13 +1164,13 @@
             document.getElementById('dataFlow').textContent = (1.0 + Math.random() * 0.5).toFixed(1) + ' PB/s';
             document.getElementById('networkNodes').textContent = (2800 + Math.floor(Math.random() * 200)).toLocaleString();
             
-            const quantumStates = ['COHERENT', 'SUPERPOSITION', 'ENTANGLED', 'STABILIZING', 'OPTIMIZED'];
+            const quantumStates = ['Coherent', 'Superposition', 'Entangled', 'Stabilizing', 'Optimized'];
             document.getElementById('quantumState').textContent = quantumStates[Math.floor(Math.random() * quantumStates.length)];
             
-            const securityLevels = ['MAXIMUM', 'ULTRA-HIGH', 'QUANTUM-ENCRYPTED', 'UNHACKABLE'];
+            const securityLevels = ['Maximum', 'Ultra-High', 'Quantum-Encrypted', 'Unhackable'];
             document.getElementById('security').textContent = securityLevels[Math.floor(Math.random() * securityLevels.length)];
             
-            const aiLevels = ['LEVEL 9', 'LEVEL 10', 'TRANSCENDENT', 'EVOLVING'];
+            const aiLevels = ['Level 9', 'Level 10', 'Transcendent', 'Evolving'];
             document.getElementById('aiLevel').textContent = aiLevels[Math.floor(Math.random() * aiLevels.length)];
         }
         
@@ -970,35 +1223,125 @@
             particleRate = e.target.value;
         });
         
-        // Add custom CSS for particle burst animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes particleBurst {
-                0% {
-                    transform: translate(0, 0) scale(1);
-                    opacity: 1;
-                }
-                100% {
-                    transform: translate(var(--burst-x, 0), var(--burst-y, 0)) scale(0);
-                    opacity: 0;
-                }
-            }
+        // Toggle control panel
+        function toggleControlPanel() {
+            const panel = document.getElementById('controlPanel');
+            const toggle = document.getElementById('controlToggle');
             
-            @keyframes resetFlash {
-                0% { opacity: 0; }
-                50% { opacity: 1; }
-                100% { opacity: 0; }
+            controlPanelOpen = !controlPanelOpen;
+            
+            if (controlPanelOpen) {
+                panel.classList.remove('collapsed');
+                toggle.classList.remove('collapsed');
+                toggle.innerHTML = 'Core Control Matrix <span style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); transition: transform 0.4s;">▼</span>';
+            } else {
+                panel.classList.add('collapsed');
+                toggle.classList.add('collapsed');
+                toggle.innerHTML = 'Open Controls <span style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%) rotate(180deg); transition: transform 0.4s;">▼</span>';
             }
-        `;
-        document.head.appendChild(style);
+        }
         
-        // Initialize everything when page loads
-        window.addEventListener('load', initializeSystem);
+        // Toggle custom functions
+        function toggleCustomFunction(id) {
+            const btn = document.getElementById(`customBtn${id}`);
+            const func = customFunctions[id];
+            
+            func.active = !func.active;
+            
+            if (func.active) {
+                btn.classList.add('active');
+                activateCustomFunction(id);
+            } else {
+                btn.classList.remove('active');
+                deactivateCustomFunction(id);
+            }
+        }
         
-        // Handle window resize
-        window.addEventListener('resize', () => {
-            setTimeout(createEnhancedNetworkNodes, 100);
-        });
+        // Activate custom function effects
+        function activateCustomFunction(id) {
+            const core = document.getElementById('digitalCore');
+            
+            switch(id) {
+                case 1: // Neural Sync
+                    core.style.animation += ', neuralPulse 1s ease-in-out infinite';
+                    break;
+                case 2: // Quantum Lock
+                    document.querySelectorAll('.core-ring').forEach(ring => {
+                        ring.style.animationPlayState = 'paused';
+                    });
+                    break;
+                case 3: // Data Mine
+                    // Increase code stream frequency
+                    advancedCodeTexts.push('DATA_MINING_ACTIVE', 'EXTRACTING_INFORMATION', 'BLOCKCHAIN_ANALYSIS');
+                    break;
+                case 4: // AI Enhance
+                    core.style.filter += ' saturate(1.5) contrast(1.2)';
+                    break;
+                case 5: // Cyber Shield
+                    const shield = document.createElement('div');
+                    shield.id = 'cyberShield';
+                    shield.style.cssText = `
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 500px;
+                        height: 500px;
+                        border: 3px solid rgba(0, 255, 255, 0.5);
+                        border-radius: 50%;
+                        animation: shieldRotate 3s linear infinite;
+                        pointer-events: none;
+                        box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+                    `;
+                    document.querySelector('.container').appendChild(shield);
+                    break;
+            }
+        }
+        
+        // Deactivate custom function effects
+        function deactivateCustomFunction(id) {
+            const core = document.getElementById('digitalCore');
+            
+            switch(id) {
+                case 1: // Neural Sync
+                    core.style.animation = core.style.animation.replace(', neuralPulse 1s ease-in-out infinite', '');
+                    break;
+                case 2: // Quantum Lock
+                    document.querySelectorAll('.core-ring').forEach(ring => {
+                        ring.style.animationPlayState = 'running';
+                    });
+                    break;
+                case 3: // Data Mine
+                    // Remove added code streams
+                    const originalTexts = [
+                        'QUANTUM_ENTANGLEMENT_PROTOCOL_ACTIVE',
+                        'NEURAL_MESH_SYNCHRONIZATION_99.7%',
+                        'BLOCKCHAIN_CONSENSUS_VERIFIED',
+                        'AI_CONSCIOUSNESS_EXPANDING',
+                        'CYBERNETIC_INTERFACE_ONLINE',
+                        'HOLOGRAPHIC_DATA_STREAM_FLOW',
+                        'MATRIX_CONNECTION_ESTABLISHED',
+                        'DIGITAL_DNA_SEQUENCE_DECODED',
+                        'VIRTUAL_REALITY_MESH_ACTIVE',
+                        'QUANTUM_COMPUTING_CORE_STABLE',
+                        'BIOMETRIC_AUTHENTICATION_PASSED',
+                        'ENCRYPTED_CHANNEL_SECURED',
+                        'DISTRIBUTED_LEDGER_UPDATED',
+                        'MACHINE_LEARNING_OPTIMIZED',
+                        'AUGMENTED_REALITY_OVERLAY_ON'
+                    ];
+                    advancedCodeTexts.length = 0;
+                    advancedCodeTexts.push(...originalTexts);
+                    break;
+                case 4: // AI Enhance
+                    core.style.filter = core.style.filter.replace(' saturate(1.5) contrast(1.2)', '');
+                    break;
+                case 5: // Cyber Shield
+                    const shield = document.getElementById('cyberShield');
+                    if (shield) shield.remove();
+                    break;
+            }
+        }
         
         // Add mouse interaction effects
         document.addEventListener('mousemove', (e) => {
@@ -1015,6 +1358,14 @@
                 core.style.filter = 'drop-shadow(0 0 50px #00ffff)';
             }
         });
+        
+        // Initialize everything when page loads
+        window.addEventListener('load', initializeSystem);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            setTimeout(createEnhancedNetworkNodes, 100);
+        });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dbc9517c78d4a',t:'MTc1Mjk2NDk5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dded604932fc8',t:'MTc1Mjk2NjM5OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
