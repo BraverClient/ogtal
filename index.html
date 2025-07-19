@@ -1,254 +1,566 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Digital Ogtal Core System</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css?family=Orbitron:700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(180deg, #101020 80%, #2efeff 100%);
-      font-family: 'Orbitron', Arial, sans-serif;
-      color: #fff;
-      overflow: hidden;
-      min-height: 100vh;
-    }
-    .digital-core {
-      position: absolute;
-      left: 50%;
-      top: 35%;
-      transform: translate(-50%, -50%);
-      width: 340px;
-      height: 340px;
-      background: radial-gradient(circle at 50% 50%, #00fff7 40%, #190033 100%);
-      border-radius: 50%;
-      box-shadow: 0 0 80px 30px #33fff6, 0 0 10px #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      border: 4px solid #0ff;
-      animation: pulse 2s infinite alternate;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 80px 10px #33fff6, 0 0 10px #fff; }
-      100% { box-shadow: 0 0 120px 40px #fff, 0 0 40px #0ff; }
-    }
-    .core-code {
-      font-size: 1.15em;
-      color: #fff;
-      text-shadow: 0 0 8px #0ff, 0 0 1px #fff;
-      font-family: 'Fira Mono', 'Consolas', monospace;
-      text-align: center;
-      max-width: 85%;
-      opacity: 0.85;
-      letter-spacing: 0.08em;
-      line-height: 1.25;
-      user-select: none;
-    }
-    .cityscape {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100vw;
-      height: 38vh;
-      background: linear-gradient(180deg, transparent 60%, #170033 100%);
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
-    .building {
-      width: 40px;
-      min-width: 18px;
-      height: 120px;
-      margin: 0 9px;
-      background: linear-gradient(180deg, #0ff 30%, #3f0099 100%);
-      border-radius: 4px 4px 8px 8px;
-      box-shadow: 0 0 30px 8px #0ff, 0 0 3px #fff;
-      position: relative;
-      animation: flicker 3s infinite alternate;
-    }
-    .building:nth-child(odd) {
-      height: 70px;
-      background: linear-gradient(180deg, #ff00cc 30%, #330066 100%);
-      box-shadow: 0 0 26px 5px #ff00cc, 0 0 3px #fff;
-      animation-delay: 0.8s;
-    }
-    .building:nth-child(even) {
-      height: 95px;
-      background: linear-gradient(180deg, #00ffea 40%, #1a0033 100%);
-      box-shadow: 0 0 24px 6px #00ffea, 0 0 2px #fff;
-      animation-delay: 1.2s;
-    }
-    @keyframes flicker {
-      0% { filter: brightness(1.05) blur(0.4px);}
-      100% { filter: brightness(1.3) blur(1.5px);}
-    }
-    .flying-vehicle {
-      position: absolute;
-      left: -60px;
-      bottom: 120px;
-      width: 55px;
-      height: 12px;
-      background: linear-gradient(90deg, #0ff 50%, #ff00cc 100%);
-      border-radius: 10px 6px 10px 6px;
-      box-shadow: 0 0 15px 6px #0ff, 0 0 4px #fff;
-      animation: fly 8s linear infinite;
-    }
-    .flying-vehicle::after {
-      content: "";
-      position: absolute;
-      right: -18px;
-      top: 3px;
-      width: 15px;
-      height: 3px;
-      background: linear-gradient(90deg, #fff, #0ff 90%);
-      border-radius: 2px;
-      opacity: 0.6;
-      filter: blur(2px);
-    }
-    @keyframes fly {
-      0% { left: -60px; bottom: 120px;}
-      100% { left: 105vw; bottom: 185px;}
-    }
-    .ui-panel {
-      position: absolute;
-      top: 28px;
-      right: 40px;
-      background: rgba(20, 0, 60, 0.85);
-      border: 1.5px solid #0ff;
-      border-radius: 12px;
-      box-shadow: 0 0 18px 1px #0ff;
-      padding: 16px 24px 12px 24px;
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .ui-panel label, .ui-panel button {
-      color: #0ff;
-      font-size: 1.1em;
-      font-weight: bold;
-      letter-spacing: 0.04em;
-      background: none;
-      border: none;
-      cursor: pointer;
-      margin-bottom: 3px;
-    }
-    .ui-panel button {
-      padding: 5px 10px;
-      background: rgba(0,255,255,0.12);
-      border-radius: 6px;
-      transition: background 0.2s;
-    }
-    .ui-panel button:hover {
-      background: rgba(0,255,255,0.28);
-    }
-    .tech-icons {
-      position: absolute;
-      top: 22px;
-      left: 34px;
-      display: flex;
-      gap: 20px;
-      z-index: 30;
-    }
-    .tech-icons img {
-      width: 36px;
-      filter: drop-shadow(0 0 7px #0ff);
-      opacity: 0.85;
-    }
-    @media (max-width: 800px) {
-      .digital-core { width: 220px; height: 220px; }
-      .core-code { font-size: 0.92em;}
-      .cityscape { height: 25vh;}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Ogtal Core System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', monospace;
+            background: #000;
+            overflow: hidden;
+            color: #00ffff;
+        }
+        
+        .container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle at center, #001122 0%, #000000 100%);
+        }
+        
+        .digital-core {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #00ffff22 0%, #ff00ff22 50%, #ffff0022 100%);
+            border: 3px solid #00ffff;
+            animation: coreRotate 10s linear infinite;
+            box-shadow: 0 0 100px #00ffff, inset 0 0 50px #ff00ff;
+        }
+        
+        .core-inner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px solid #ff00ff;
+            animation: coreRotate 8s linear infinite reverse;
+        }
+        
+        .core-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #ffffff 0%, #00ffff 100%);
+            animation: pulse 2s ease-in-out infinite;
+            box-shadow: 0 0 50px #ffffff;
+        }
+        
+        .geometric-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.3;
+        }
+        
+        .hex-grid {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border: 1px solid #00ffff;
+            transform: rotate(45deg);
+            animation: float 4s ease-in-out infinite;
+        }
+        
+        .code-stream {
+            position: absolute;
+            font-size: 12px;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            animation: streamFlow 3s linear infinite;
+            opacity: 0.7;
+        }
+        
+        .network-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #ffff00;
+            border-radius: 50%;
+            box-shadow: 0 0 20px #ffff00;
+            animation: nodeFlicker 1.5s ease-in-out infinite;
+        }
+        
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent 0%, #00ffff 50%, transparent 100%);
+            animation: dataFlow 2s linear infinite;
+        }
+        
+        .control-panel {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 20, 40, 0.9);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .control-group {
+            margin-bottom: 15px;
+        }
+        
+        .control-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 12px;
+            color: #00ffff;
+        }
+        
+        .slider {
+            width: 150px;
+            height: 5px;
+            background: #333;
+            border-radius: 5px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 15px;
+            height: 15px;
+            background: #00ffff;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px #00ffff;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 10px;
+            margin: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px #00ffff;
+        }
+        
+        .status-display {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 20, 40, 0.9);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 11px;
+        }
+        
+        .status-value {
+            color: #00ff00;
+            font-weight: bold;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: particleFloat 6s linear infinite;
+        }
+        
+        .cyberpunk-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 31%, rgba(0, 255, 255, 0.1) 32%, transparent 33%),
+                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 255, 0.1) 31%, rgba(255, 0, 255, 0.1) 32%, transparent 33%);
+            background-size: 100px 100px;
+            animation: bgShift 20s linear infinite;
+            opacity: 0.3;
+        }
+        
+        @keyframes coreRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: rotate(45deg) translateY(0px); }
+            50% { transform: rotate(45deg) translateY(-20px); }
+        }
+        
+        @keyframes streamFlow {
+            0% { opacity: 0; transform: translateX(-100px); }
+            50% { opacity: 1; }
+            100% { opacity: 0; transform: translateX(100px); }
+        }
+        
+        @keyframes nodeFlicker {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+        
+        @keyframes dataFlow {
+            0% { transform: scaleX(0); }
+            50% { transform: scaleX(1); }
+            100% { transform: scaleX(0); }
+        }
+        
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+        
+        @keyframes bgShift {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+        
+        @media (max-width: 768px) {
+            .digital-core {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .core-inner {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .core-center {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .control-panel {
+                top: 10px;
+                left: 10px;
+                padding: 15px;
+            }
+            
+            .slider {
+                width: 120px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="tech-icons">
-    <img src="https://img.icons8.com/ios-filled/50/00fff7/usb.png" alt="USB">
-    <img src="https://img.icons8.com/ios-filled/50/00fff7/wifi.png" alt="WiFi">
-    <img src="https://img.icons8.com/ios-filled/50/00fff7/bluetooth.png" alt="Bluetooth">
-    <img src="https://img.icons8.com/ios-filled/50/00fff7/hdd.png" alt="HDD">
-    <img src="https://img.icons8.com/ios-filled/50/00fff7/settings.png" alt="Settings">
-    <img src="https://img.icons8.com/ios-filled/50/00fff7/cloud.png" alt="Cloud">
-  </div>
-  <div class="digital-core">
-    <div class="core-code">
-      <span>&lt;code&gt;<br>
-        for(i=0;i&lt;∞;i++)<br>
-        &#160;{<br>
-        &#160;&#160;geometry++ ;<br>
-        &#160;&#160;energy.pulse();<br>
-        &#160;&#160;cloud.sync();<br>
-        &#160;&#160;network.connect();<br>
-        &#160;}
-      <br>&lt;/code&gt;
-      </span>
+    <div class="container">
+        <div class="cyberpunk-bg"></div>
+        
+        <div class="digital-core" id="digitalCore">
+            <div class="core-inner">
+                <div class="core-center"></div>
+            </div>
+        </div>
+        
+        <div class="geometric-pattern" id="geometricPattern"></div>
+        
+        <div class="control-panel">
+            <h3 style="margin-bottom: 15px; color: #00ffff; font-size: 14px;">CORE CONTROL</h3>
+            
+            <div class="control-group">
+                <label>Core Speed</label>
+                <input type="range" class="slider" id="coreSpeed" min="1" max="20" value="10">
+            </div>
+            
+            <div class="control-group">
+                <label>Network Density</label>
+                <input type="range" class="slider" id="networkDensity" min="10" max="100" value="50">
+            </div>
+            
+            <div class="control-group">
+                <label>Energy Flow</label>
+                <input type="range" class="slider" id="energyFlow" min="1" max="10" value="5">
+            </div>
+            
+            <div class="control-group">
+                <button class="btn" onclick="toggleMode('cyberpunk')">CYBERPUNK</button>
+                <button class="btn" onclick="toggleMode('matrix')">MATRIX</button>
+                <button class="btn" onclick="toggleMode('quantum')">QUANTUM</button>
+            </div>
+            
+            <div class="control-group">
+                <button class="btn" onclick="generateParticles()">BOOST CORE</button>
+                <button class="btn" onclick="resetSystem()">RESET</button>
+            </div>
+        </div>
+        
+        <div class="status-display">
+            <h4 style="margin-bottom: 10px; color: #ff00ff;">SYSTEM STATUS</h4>
+            <div class="status-item">
+                <span>Core Temp:</span>
+                <span class="status-value" id="coreTemp">2847°K</span>
+            </div>
+            <div class="status-item">
+                <span>Data Flow:</span>
+                <span class="status-value" id="dataFlow">847.2 TB/s</span>
+            </div>
+            <div class="status-item">
+                <span>Network Nodes:</span>
+                <span class="status-value" id="networkNodes">1,247</span>
+            </div>
+            <div class="status-item">
+                <span>Quantum State:</span>
+                <span class="status-value" id="quantumState">STABLE</span>
+            </div>
+            <div class="status-item">
+                <span>Security:</span>
+                <span class="status-value" id="security">ENCRYPTED</span>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="cityscape" id="cityscape">
-    <!-- Buildings will be injected by JS -->
-    <div class="flying-vehicle"></div>
-  </div>
-  <div class="ui-panel">
-    <label>Color Theme</label>
-    <button onclick="switchTheme('cyberpunk')">Cyberpunk</button>
-    <button onclick="switchTheme('vaporwave')">Vaporwave</button>
-    <button onclick="switchTheme('solarpunk')">Solarized</button>
-    <label>Perspective</label>
-    <button onclick="cityView('panoramic')">Panoramic</button>
-    <button onclick="cityView('bird')">Bird’s Eye</button>
-    <button onclick="cityView('street')">Street</button>
-  </div>
-  <script>
-    // Generate random buildings for cityscape
-    let city = document.getElementById('cityscape');
-    for(let i=0; i<18; i++) {
-      let b = document.createElement('div');
-      b.className = 'building';
-      b.title = "Building " + (i + 1);
-      b.onclick = function() {
-        b.style.boxShadow = "0 0 60px 16px #fff, 0 0 20px #0ff";
-        setTimeout(()=>b.style.boxShadow = '', 450);
-      };
-      city.appendChild(b);
-    }
 
-    // Theme and perspective controls
-    function switchTheme(theme) {
-      switch(theme) {
-        case 'cyberpunk':
-          document.body.style.background = "linear-gradient(180deg, #101020 80%, #2efeff 100%)";
-          break;
-        case 'vaporwave':
-          document.body.style.background = "linear-gradient(180deg, #ffb6c1 20%, #00fff7 100%)";
-          break;
-        case 'solarpunk':
-          document.body.style.background = "linear-gradient(180deg, #faffd1 20%, #a1ffce 100%)";
-          break;
-      }
-    }
-    function cityView(view) {
-      let city = document.getElementById('cityscape');
-      switch(view) {
-        case 'panoramic':
-          city.style.height = '38vh';
-          city.style.filter = 'none';
-          break;
-        case 'bird':
-          city.style.height = '24vh';
-          city.style.filter = 'blur(2px) brightness(1.15)';
-          break;
-        case 'street':
-          city.style.height = '60vh';
-          city.style.filter = 'brightness(1.25) blur(1.5px)';
-          break;
-      }
-    }
-  </script>
-</body>
+    <script>
+        let currentMode = 'cyberpunk';
+        let animationSpeed = 10;
+        let networkDensity = 50;
+        let energyLevel = 5;
+        
+        // Initialize the system
+        function initializeSystem() {
+            createGeometricPatterns();
+            createNetworkNodes();
+            createCodeStreams();
+            createParticles();
+            updateStatus();
+            setInterval(updateStatus, 2000);
+        }
+        
+        // Create geometric patterns
+        function createGeometricPatterns() {
+            const pattern = document.getElementById('geometricPattern');
+            pattern.innerHTML = '';
+            
+            for (let i = 0; i < 20; i++) {
+                const hex = document.createElement('div');
+                hex.className = 'hex-grid';
+                hex.style.left = Math.random() * 100 + '%';
+                hex.style.top = Math.random() * 100 + '%';
+                hex.style.animationDelay = Math.random() * 4 + 's';
+                pattern.appendChild(hex);
+            }
+        }
+        
+        // Create network nodes and connections
+        function createNetworkNodes() {
+            const container = document.querySelector('.container');
+            const nodeCount = Math.floor(networkDensity / 2);
+            
+            // Remove existing nodes and connections
+            document.querySelectorAll('.network-node, .connection-line').forEach(el => el.remove());
+            
+            const nodes = [];
+            
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'network-node';
+                const x = Math.random() * 90 + 5;
+                const y = Math.random() * 90 + 5;
+                node.style.left = x + '%';
+                node.style.top = y + '%';
+                node.style.animationDelay = Math.random() * 1.5 + 's';
+                container.appendChild(node);
+                nodes.push({element: node, x, y});
+            }
+            
+            // Create connections between nearby nodes
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const distance = Math.sqrt(
+                        Math.pow(nodes[i].x - nodes[j].x, 2) + 
+                        Math.pow(nodes[i].y - nodes[j].y, 2)
+                    );
+                    
+                    if (distance < 30 && Math.random() > 0.7) {
+                        const line = document.createElement('div');
+                        line.className = 'connection-line';
+                        const angle = Math.atan2(nodes[j].y - nodes[i].y, nodes[j].x - nodes[i].x);
+                        line.style.left = nodes[i].x + '%';
+                        line.style.top = nodes[i].y + '%';
+                        line.style.width = distance + 'vw';
+                        line.style.transform = `rotate(${angle}rad)`;
+                        line.style.animationDelay = Math.random() * 2 + 's';
+                        container.appendChild(line);
+                    }
+                }
+            }
+        }
+        
+        // Create flowing code streams
+        function createCodeStreams() {
+            const container = document.querySelector('.container');
+            const codeTexts = [
+                '01001000 01100101 01101100 01101100 01101111',
+                'QUANTUM_CORE_INIT()',
+                'NEURAL_NET_ACTIVE',
+                'DATA_STREAM_FLOW',
+                'SECURITY_PROTOCOL_ENABLED',
+                'BLOCKCHAIN_VERIFIED',
+                'AI_CONSCIOUSNESS_LEVEL_9',
+                'MATRIX_CONNECTION_STABLE'
+            ];
+            
+            setInterval(() => {
+                if (document.querySelectorAll('.code-stream').length < 15) {
+                    const stream = document.createElement('div');
+                    stream.className = 'code-stream';
+                    stream.textContent = codeTexts[Math.floor(Math.random() * codeTexts.length)];
+                    stream.style.left = '-200px';
+                    stream.style.top = Math.random() * 100 + '%';
+                    stream.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    container.appendChild(stream);
+                    
+                    setTimeout(() => stream.remove(), 5000);
+                }
+            }, 500);
+        }
+        
+        // Create floating particles
+        function createParticles() {
+            const container = document.querySelector('.container');
+            
+            setInterval(() => {
+                if (document.querySelectorAll('.particle').length < 30) {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                    particle.style.animationDelay = Math.random() * 2 + 's';
+                    container.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 8000);
+                }
+            }, 200);
+        }
+        
+        // Generate particle burst
+        function generateParticles() {
+            const container = document.querySelector('.container');
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.className = 'particle';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.background = ['#00ffff', '#ff00ff', '#ffff00'][Math.floor(Math.random() * 3)];
+                    particle.style.animationDuration = '2s';
+                    container.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 2000);
+                }, i * 50);
+            }
+        }
+        
+        // Toggle visual modes
+        function toggleMode(mode) {
+            currentMode = mode;
+            const core = document.getElementById('digitalCore');
+            const body = document.body;
+            
+            switch(mode) {
+                case 'cyberpunk':
+                    core.style.borderColor = '#00ffff';
+                    core.style.boxShadow = '0 0 100px #00ffff, inset 0 0 50px #ff00ff';
+                    body.style.background = '#000';
+                    break;
+                case 'matrix':
+                    core.style.borderColor = '#00ff00';
+                    core.style.boxShadow = '0 0 100px #00ff00, inset 0 0 50px #00ff00';
+                    body.style.background = '#001100';
+                    break;
+                case 'quantum':
+                    core.style.borderColor = '#ff00ff';
+                    core.style.boxShadow = '0 0 100px #ff00ff, inset 0 0 50px #ffff00';
+                    body.style.background = '#110011';
+                    break;
+            }
+        }
+        
+        // Update system status
+        function updateStatus() {
+            document.getElementById('coreTemp').textContent = (2800 + Math.random() * 100).toFixed(0) + '°K';
+            document.getElementById('dataFlow').textContent = (800 + Math.random() * 100).toFixed(1) + ' TB/s';
+            document.getElementById('networkNodes').textContent = (1200 + Math.floor(Math.random() * 100)).toLocaleString();
+            
+            const states = ['STABLE', 'FLUCTUATING', 'OPTIMIZING', 'ENHANCED'];
+            document.getElementById('quantumState').textContent = states[Math.floor(Math.random() * states.length)];
+        }
+        
+        // Reset system
+        function resetSystem() {
+            location.reload();
+        }
+        
+        // Control panel event listeners
+        document.getElementById('coreSpeed').addEventListener('input', function(e) {
+            animationSpeed = e.target.value;
+            const core = document.getElementById('digitalCore');
+            core.style.animationDuration = (20 / animationSpeed) + 's';
+        });
+        
+        document.getElementById('networkDensity').addEventListener('input', function(e) {
+            networkDensity = e.target.value;
+            createNetworkNodes();
+        });
+        
+        document.getElementById('energyFlow').addEventListener('input', function(e) {
+            energyLevel = e.target.value;
+            const connections = document.querySelectorAll('.connection-line');
+            connections.forEach(line => {
+                line.style.animationDuration = (3 / energyLevel) + 's';
+            });
+        });
+        
+        // Initialize everything when page loads
+        window.addEventListener('load', initializeSystem);
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            setTimeout(createNetworkNodes, 100);
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dace9078ea393',t:'MTc1Mjk2NDM1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
