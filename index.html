@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Ogtal Core System</title>
+    <title>Advanced Digital Ogtal Core System</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@300;400;700;900&family=Rajdhani:wght@300;400;600&display=swap');
         
         * {
             margin: 0;
@@ -18,13 +18,17 @@
             background: #000;
             overflow: hidden;
             color: #00ffff;
+            cursor: crosshair;
         }
         
         .container {
             position: relative;
             width: 100vw;
             height: 100vh;
-            background: radial-gradient(circle at center, #001122 0%, #000000 100%);
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at center, #001122 0%, #000000 100%);
         }
         
         .digital-core {
@@ -32,25 +36,62 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 400px;
-            height: 400px;
+            width: 450px;
+            height: 450px;
             border-radius: 50%;
-            background: radial-gradient(circle, #00ffff22 0%, #ff00ff22 50%, #ffff0022 100%);
-            border: 3px solid #00ffff;
-            animation: coreRotate 10s linear infinite;
-            box-shadow: 0 0 100px #00ffff, inset 0 0 50px #ff00ff;
+            background: 
+                radial-gradient(circle at 30% 30%, rgba(0, 255, 255, 0.3) 0%, transparent 40%),
+                radial-gradient(circle at 70% 70%, rgba(255, 0, 255, 0.3) 0%, transparent 40%),
+                radial-gradient(circle, rgba(255, 255, 0, 0.1) 0%, rgba(0, 255, 255, 0.2) 50%, rgba(255, 0, 255, 0.1) 100%);
+            border: 4px solid #00ffff;
+            animation: coreRotate 12s linear infinite, corePulse 3s ease-in-out infinite;
+            box-shadow: 
+                0 0 150px #00ffff,
+                inset 0 0 80px rgba(255, 0, 255, 0.5),
+                0 0 300px rgba(0, 255, 255, 0.3);
+            filter: drop-shadow(0 0 50px #00ffff);
         }
         
-        .core-inner {
+        .core-rings {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .core-ring {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             border-radius: 50%;
-            border: 2px solid #ff00ff;
-            animation: coreRotate 8s linear infinite reverse;
+            border: 2px solid;
+            animation: ringRotate linear infinite;
+        }
+        
+        .ring-1 {
+            width: 350px;
+            height: 350px;
+            border-color: rgba(255, 0, 255, 0.6);
+            animation-duration: 8s;
+            animation-direction: reverse;
+        }
+        
+        .ring-2 {
+            width: 280px;
+            height: 280px;
+            border-color: rgba(255, 255, 0, 0.6);
+            animation-duration: 6s;
+        }
+        
+        .ring-3 {
+            width: 200px;
+            height: 200px;
+            border-color: rgba(0, 255, 255, 0.8);
+            animation-duration: 4s;
+            animation-direction: reverse;
         }
         
         .core-center {
@@ -58,12 +99,16 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            background: radial-gradient(circle, #ffffff 0%, #00ffff 100%);
-            animation: pulse 2s ease-in-out infinite;
-            box-shadow: 0 0 50px #ffffff;
+            background: 
+                radial-gradient(circle at 30% 30%, #ffffff 0%, #00ffff 30%, #ff00ff 70%, #000000 100%);
+            animation: centerPulse 1.5s ease-in-out infinite, centerRotate 20s linear infinite;
+            box-shadow: 
+                0 0 80px #ffffff,
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.8);
         }
         
         .geometric-pattern {
@@ -72,133 +117,356 @@
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.3;
+            opacity: 0.4;
+            pointer-events: none;
         }
         
         .hex-grid {
             position: absolute;
-            width: 60px;
-            height: 60px;
-            border: 1px solid #00ffff;
+            width: 80px;
+            height: 80px;
+            border: 2px solid;
             transform: rotate(45deg);
-            animation: float 4s ease-in-out infinite;
+            animation: hexFloat 6s ease-in-out infinite;
+            background: rgba(0, 255, 255, 0.05);
+        }
+        
+        .triangle-grid {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 25px solid transparent;
+            border-right: 25px solid transparent;
+            border-bottom: 43px solid rgba(255, 0, 255, 0.3);
+            animation: triangleFloat 8s ease-in-out infinite;
         }
         
         .code-stream {
             position: absolute;
-            font-size: 12px;
+            font-size: 14px;
             color: #00ff00;
-            font-family: 'Courier New', monospace;
-            animation: streamFlow 3s linear infinite;
-            opacity: 0.7;
+            font-family: 'Rajdhani', monospace;
+            font-weight: 600;
+            animation: streamFlow 4s linear infinite;
+            opacity: 0.8;
+            text-shadow: 0 0 10px currentColor;
+            white-space: nowrap;
         }
         
         .network-node {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #ffff00;
+            width: 12px;
+            height: 12px;
+            background: radial-gradient(circle, #ffff00 0%, #ff8800 100%);
             border-radius: 50%;
-            box-shadow: 0 0 20px #ffff00;
-            animation: nodeFlicker 1.5s ease-in-out infinite;
+            box-shadow: 0 0 30px currentColor;
+            animation: nodeFlicker 2s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.5);
         }
         
         .connection-line {
             position: absolute;
-            height: 2px;
-            background: linear-gradient(90deg, transparent 0%, #00ffff 50%, transparent 100%);
-            animation: dataFlow 2s linear infinite;
+            height: 3px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(0, 255, 255, 0.8) 20%, 
+                rgba(255, 0, 255, 0.8) 50%, 
+                rgba(255, 255, 0, 0.8) 80%, 
+                transparent 100%);
+            animation: dataFlow 3s linear infinite;
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
         
         .control-panel {
             position: absolute;
             top: 20px;
             left: 20px;
-            background: rgba(0, 20, 40, 0.9);
-            border: 2px solid #00ffff;
+            background: rgba(0, 20, 40, 0.95);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+            min-width: 280px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .control-panel.collapsed {
+            min-width: 250px;
+        }
+        
+        .control-panel-content {
+            padding: 25px;
+            transition: all 0.3s ease;
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        .control-panel.collapsed .control-panel-content {
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 25px;
+            opacity: 0;
+        }
+        
+        .control-toggle {
+            background: linear-gradient(45deg, #00ffff, #0088cc);
+            border: none;
+            color: white;
+            padding: 15px 20px;
             border-radius: 10px;
-            padding: 20px;
-            backdrop-filter: blur(10px);
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .control-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 255, 0.5);
+        }
+        
+        .control-toggle.collapsed {
+            background: linear-gradient(45deg, #ff00ff, #cc0088);
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.3);
+        }
+        
+        .control-toggle::after {
+            content: '▼';
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+        
+        .control-toggle.collapsed::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+        
+        .control-header {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 10px currentColor;
+            letter-spacing: 2px;
         }
         
         .control-group {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
         
         .control-group label {
             display: block;
-            margin-bottom: 5px;
-            font-size: 12px;
+            margin-bottom: 8px;
+            font-size: 13px;
             color: #00ffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .slider {
-            width: 150px;
-            height: 5px;
-            background: #333;
-            border-radius: 5px;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #333, #666);
+            border-radius: 10px;
             outline: none;
             -webkit-appearance: none;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
         }
         
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 15px;
-            height: 15px;
-            background: #00ffff;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #00ffff, #0088cc);
             border-radius: 50%;
             cursor: pointer;
-            box-shadow: 0 0 10px #00ffff;
+            box-shadow: 0 0 15px #00ffff;
+            border: 2px solid #ffffff;
         }
         
         .btn {
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
+            background-size: 300% 300%;
             border: none;
             color: white;
-            padding: 8px 16px;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: 8px;
             cursor: pointer;
             font-family: 'Orbitron', monospace;
-            font-size: 10px;
-            margin: 2px;
+            font-size: 11px;
+            font-weight: 700;
+            margin: 3px;
             transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: gradientShift 3s ease infinite;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
         }
         
         .btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px #00ffff;
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 255, 0.5);
+            animation-duration: 1s;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .custom-functions {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+        }
+        
+        .custom-functions-label {
+            display: block;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #00ffff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+        
+        .custom-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .custom-btn {
+            background: linear-gradient(45deg, #1a1a2e, #16213e);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 12px 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .custom-btn:hover {
+            background: linear-gradient(45deg, #00ffff, #0088cc);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.4);
+        }
+        
+        .custom-btn.active {
+            background: linear-gradient(45deg, #ff00ff, #cc0088);
+            border-color: #ff00ff;
+            color: white;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.6);
+            animation: activeGlow 2s ease-in-out infinite;
+        }
+        
+        .custom-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .custom-btn:hover::before {
+            left: 100%;
+        }
+        
+        @keyframes activeGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.6); }
+            50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.8); }
         }
         
         .status-display {
             position: absolute;
             bottom: 20px;
             right: 20px;
-            background: rgba(0, 20, 40, 0.9);
-            border: 2px solid #ff00ff;
-            border-radius: 10px;
-            padding: 15px;
-            backdrop-filter: blur(10px);
+            background: rgba(0, 20, 40, 0.95);
+            border: 3px solid #ff00ff;
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 0 30px rgba(255, 0, 255, 0.3);
+            min-width: 250px;
+        }
+        
+        .status-header {
+            text-align: center;
+            margin-bottom: 15px;
+            font-size: 14px;
+            font-weight: 900;
+            color: #ff00ff;
+            text-shadow: 0 0 10px currentColor;
+            letter-spacing: 2px;
         }
         
         .status-item {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 11px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 0, 255, 0.2);
+        }
+        
+        .status-label {
+            color: #cccccc;
+            font-weight: 400;
         }
         
         .status-value {
             color: #00ff00;
             font-weight: bold;
+            text-shadow: 0 0 5px currentColor;
         }
         
         .particle {
             position: absolute;
-            width: 3px;
-            height: 3px;
-            background: #ffffff;
             border-radius: 50%;
-            animation: particleFloat 6s linear infinite;
+            animation: particleFloat linear infinite;
+            pointer-events: none;
+        }
+        
+        .energy-wave {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: waveExpand 4s ease-out infinite;
         }
         
         .cyberpunk-bg {
@@ -208,11 +476,34 @@
             width: 100%;
             height: 100%;
             background: 
-                linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 31%, rgba(0, 255, 255, 0.1) 32%, transparent 33%),
-                linear-gradient(-45deg, transparent 30%, rgba(255, 0, 255, 0.1) 31%, rgba(255, 0, 255, 0.1) 32%, transparent 33%);
-            background-size: 100px 100px;
-            animation: bgShift 20s linear infinite;
-            opacity: 0.3;
+                linear-gradient(45deg, transparent 48%, rgba(0, 255, 255, 0.1) 49%, rgba(0, 255, 255, 0.1) 51%, transparent 52%),
+                linear-gradient(-45deg, transparent 48%, rgba(255, 0, 255, 0.1) 49%, rgba(255, 0, 255, 0.1) 51%, transparent 52%);
+            background-size: 120px 120px;
+            animation: bgShift 25s linear infinite;
+            opacity: 0.4;
+        }
+        
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            animation: scanMove 3s linear infinite;
+            opacity: 0.6;
+        }
+        
+        .hologram-text {
+            position: absolute;
+            top: 20px;
+            right: 50%;
+            transform: translateX(50%);
+            font-family: 'Orbitron', monospace;
+            font-size: 24px;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 0 0 20px currentColor;
+            animation: hologramFlicker 2s ease-in-out infinite;
+            letter-spacing: 3px;
         }
         
         @keyframes coreRotate {
@@ -220,69 +511,192 @@
             100% { transform: translate(-50%, -50%) rotate(360deg); }
         }
         
-        @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+        @keyframes corePulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 150px #00ffff, inset 0 0 80px rgba(255, 0, 255, 0.5);
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.05);
+                box-shadow: 0 0 200px #00ffff, inset 0 0 100px rgba(255, 0, 255, 0.7);
+            }
         }
         
-        @keyframes float {
-            0%, 100% { transform: rotate(45deg) translateY(0px); }
-            50% { transform: rotate(45deg) translateY(-20px); }
+        @keyframes ringRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        @keyframes centerPulse {
+            0%, 100% { 
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 80px #ffffff;
+            }
+            50% { 
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 120px #ffffff;
+            }
+        }
+        
+        @keyframes centerRotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(-360deg); }
+        }
+        
+        @keyframes hexFloat {
+            0%, 100% { 
+                transform: rotate(45deg) translateY(0px) scale(1);
+                border-color: #00ffff;
+            }
+            33% { 
+                transform: rotate(45deg) translateY(-30px) scale(1.1);
+                border-color: #ff00ff;
+            }
+            66% { 
+                transform: rotate(45deg) translateY(-15px) scale(0.9);
+                border-color: #ffff00;
+            }
+        }
+        
+        @keyframes triangleFloat {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+                border-bottom-color: rgba(255, 0, 255, 0.3);
+            }
+            50% { 
+                transform: translateY(-40px) rotate(180deg);
+                border-bottom-color: rgba(0, 255, 255, 0.3);
+            }
         }
         
         @keyframes streamFlow {
-            0% { opacity: 0; transform: translateX(-100px); }
-            50% { opacity: 1; }
-            100% { opacity: 0; transform: translateX(100px); }
+            0% { 
+                opacity: 0; 
+                transform: translateX(-200px) scale(0.8);
+            }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { 
+                opacity: 0; 
+                transform: translateX(200px) scale(1.2);
+            }
         }
         
         @keyframes nodeFlicker {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+                box-shadow: 0 0 30px #ffff00;
+            }
+            25% { 
+                opacity: 0.7; 
+                transform: scale(1.3);
+                box-shadow: 0 0 40px #ff00ff;
+            }
+            75% { 
+                opacity: 0.9; 
+                transform: scale(0.8);
+                box-shadow: 0 0 35px #00ffff;
+            }
         }
         
         @keyframes dataFlow {
-            0% { transform: scaleX(0); }
-            50% { transform: scaleX(1); }
-            100% { transform: scaleX(0); }
+            0% { 
+                transform: scaleX(0) translateX(-50%);
+                opacity: 0;
+            }
+            20% { opacity: 1; }
+            50% { 
+                transform: scaleX(1) translateX(0%);
+                opacity: 1;
+            }
+            80% { opacity: 1; }
+            100% { 
+                transform: scaleX(0) translateX(50%);
+                opacity: 0;
+            }
         }
         
         @keyframes particleFloat {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+            0% { 
+                transform: translateY(100vh) rotate(0deg) scale(0);
+                opacity: 0;
+            }
+            10% { 
+                opacity: 1;
+                transform: translateY(90vh) rotate(36deg) scale(1);
+            }
+            90% { 
+                opacity: 1;
+                transform: translateY(-10vh) rotate(324deg) scale(1);
+            }
+            100% { 
+                transform: translateY(-20vh) rotate(360deg) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes waveExpand {
+            0% { 
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 1;
+            }
+            100% { 
+                transform: translate(-50%, -50%) scale(2);
+                opacity: 0;
+            }
         }
         
         @keyframes bgShift {
             0% { background-position: 0 0; }
-            100% { background-position: 100px 100px; }
+            100% { background-position: 120px 120px; }
+        }
+        
+        @keyframes scanMove {
+            0% { top: 0%; opacity: 0; }
+            50% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+        
+        @keyframes hologramFlicker {
+            0%, 100% { 
+                opacity: 1;
+                text-shadow: 0 0 20px #00ffff;
+            }
+            50% { 
+                opacity: 0.8;
+                text-shadow: 0 0 30px #00ffff, 0 0 40px #ff00ff;
+            }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
         
         @media (max-width: 768px) {
             .digital-core {
-                width: 300px;
-                height: 300px;
+                width: 350px;
+                height: 350px;
             }
             
-            .core-inner {
-                width: 200px;
-                height: 200px;
-            }
+            .ring-1 { width: 280px; height: 280px; }
+            .ring-2 { width: 220px; height: 220px; }
+            .ring-3 { width: 160px; height: 160px; }
             
             .core-center {
-                width: 100px;
-                height: 100px;
+                width: 90px;
+                height: 90px;
             }
             
-            .control-panel {
-                top: 10px;
-                left: 10px;
+            .control-panel, .status-display {
                 padding: 15px;
+                min-width: 200px;
             }
             
-            .slider {
-                width: 120px;
+            .hologram-text {
+                font-size: 18px;
             }
         }
     </style>
@@ -290,124 +704,209 @@
 <body>
     <div class="container">
         <div class="cyberpunk-bg"></div>
+        <div class="scan-line"></div>
+        
+        <div class="hologram-text">DIGITAL OGTAL CORE</div>
         
         <div class="digital-core" id="digitalCore">
-            <div class="core-inner">
-                <div class="core-center"></div>
+            <div class="core-rings">
+                <div class="core-ring ring-1"></div>
+                <div class="core-ring ring-2"></div>
+                <div class="core-ring ring-3"></div>
             </div>
+            <div class="core-center"></div>
         </div>
         
         <div class="geometric-pattern" id="geometricPattern"></div>
         
-        <div class="control-panel">
-            <h3 style="margin-bottom: 15px; color: #00ffff; font-size: 14px;">CORE CONTROL</h3>
+        <div class="control-panel" id="controlPanel">
+            <button class="control-toggle" id="controlToggle" onclick="toggleControlPanel()">
+                CORE CONTROL MATRIX
+            </button>
             
-            <div class="control-group">
-                <label>Core Speed</label>
-                <input type="range" class="slider" id="coreSpeed" min="1" max="20" value="10">
-            </div>
-            
-            <div class="control-group">
-                <label>Network Density</label>
-                <input type="range" class="slider" id="networkDensity" min="10" max="100" value="50">
-            </div>
-            
-            <div class="control-group">
-                <label>Energy Flow</label>
-                <input type="range" class="slider" id="energyFlow" min="1" max="10" value="5">
-            </div>
-            
-            <div class="control-group">
-                <button class="btn" onclick="toggleMode('cyberpunk')">CYBERPUNK</button>
-                <button class="btn" onclick="toggleMode('matrix')">MATRIX</button>
-                <button class="btn" onclick="toggleMode('quantum')">QUANTUM</button>
-            </div>
-            
-            <div class="control-group">
-                <button class="btn" onclick="generateParticles()">BOOST CORE</button>
-                <button class="btn" onclick="resetSystem()">RESET</button>
+            <div class="control-panel-content" id="controlContent">
+                <div class="control-group">
+                    <label>Core Rotation Speed</label>
+                    <input type="range" class="slider" id="coreSpeed" min="1" max="30" value="12">
+                </div>
+                
+                <div class="control-group">
+                    <label>Network Node Density</label>
+                    <input type="range" class="slider" id="networkDensity" min="20" max="150" value="75">
+                </div>
+                
+                <div class="control-group">
+                    <label>Energy Flow Intensity</label>
+                    <input type="range" class="slider" id="energyFlow" min="1" max="15" value="8">
+                </div>
+                
+                <div class="control-group">
+                    <label>Particle Generation</label>
+                    <input type="range" class="slider" id="particleRate" min="1" max="20" value="10">
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn" onclick="toggleMode('cyberpunk')">CYBERPUNK</button>
+                    <button class="btn" onclick="toggleMode('matrix')">MATRIX</button>
+                    <button class="btn" onclick="toggleMode('quantum')">QUANTUM</button>
+                </div>
+                
+                <div class="control-group">
+                    <button class="btn" onclick="generateParticles()">CORE BOOST</button>
+                    <button class="btn" onclick="createEnergyWave()">ENERGY WAVE</button>
+                    <button class="btn" onclick="resetSystem()">SYSTEM RESET</button>
+                </div>
+                
+                <div class="custom-functions">
+                    <label class="custom-functions-label">Custom Functions</label>
+                    <div class="custom-buttons">
+                        <button class="custom-btn" id="customBtn1" onclick="toggleCustomFunction(1)">NEURAL SYNC</button>
+                        <button class="custom-btn" id="customBtn2" onclick="toggleCustomFunction(2)">QUANTUM LOCK</button>
+                        <button class="custom-btn" id="customBtn3" onclick="toggleCustomFunction(3)">DATA MINE</button>
+                        <button class="custom-btn" id="customBtn4" onclick="toggleCustomFunction(4)">AI ENHANCE</button>
+                        <button class="custom-btn" id="customBtn5" onclick="toggleCustomFunction(5)">CYBER SHIELD</button>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div class="status-display">
-            <h4 style="margin-bottom: 10px; color: #ff00ff;">SYSTEM STATUS</h4>
+            <div class="status-header">SYSTEM DIAGNOSTICS</div>
             <div class="status-item">
-                <span>Core Temp:</span>
-                <span class="status-value" id="coreTemp">2847°K</span>
+                <span class="status-label">Core Temperature:</span>
+                <span class="status-value" id="coreTemp">3247°K</span>
             </div>
             <div class="status-item">
-                <span>Data Flow:</span>
-                <span class="status-value" id="dataFlow">847.2 TB/s</span>
+                <span class="status-label">Data Throughput:</span>
+                <span class="status-value" id="dataFlow">1.2 PB/s</span>
             </div>
             <div class="status-item">
-                <span>Network Nodes:</span>
-                <span class="status-value" id="networkNodes">1,247</span>
+                <span class="status-label">Active Nodes:</span>
+                <span class="status-value" id="networkNodes">2,847</span>
             </div>
             <div class="status-item">
-                <span>Quantum State:</span>
-                <span class="status-value" id="quantumState">STABLE</span>
+                <span class="status-label">Quantum State:</span>
+                <span class="status-value" id="quantumState">COHERENT</span>
             </div>
             <div class="status-item">
-                <span>Security:</span>
-                <span class="status-value" id="security">ENCRYPTED</span>
+                <span class="status-label">Security Level:</span>
+                <span class="status-value" id="security">MAXIMUM</span>
+            </div>
+            <div class="status-item">
+                <span class="status-label">AI Consciousness:</span>
+                <span class="status-value" id="aiLevel">LEVEL 9</span>
             </div>
         </div>
     </div>
 
     <script>
         let currentMode = 'cyberpunk';
-        let animationSpeed = 10;
-        let networkDensity = 50;
-        let energyLevel = 5;
+        let animationSpeed = 12;
+        let networkDensity = 75;
+        let energyLevel = 8;
+        let particleRate = 10;
+        let systemActive = true;
+        let controlPanelOpen = true;
+        let customFunctions = {
+            1: { active: false, name: 'NEURAL SYNC' },
+            2: { active: false, name: 'QUANTUM LOCK' },
+            3: { active: false, name: 'DATA MINE' },
+            4: { active: false, name: 'AI ENHANCE' },
+            5: { active: false, name: 'CYBER SHIELD' }
+        };
         
-        // Initialize the system
+        // Enhanced code streams with more variety
+        const advancedCodeTexts = [
+            'QUANTUM_ENTANGLEMENT_PROTOCOL_ACTIVE',
+            'NEURAL_MESH_SYNCHRONIZATION_99.7%',
+            'BLOCKCHAIN_CONSENSUS_VERIFIED',
+            'AI_CONSCIOUSNESS_EXPANDING',
+            'CYBERNETIC_INTERFACE_ONLINE',
+            'HOLOGRAPHIC_DATA_STREAM_FLOW',
+            'MATRIX_CONNECTION_ESTABLISHED',
+            'DIGITAL_DNA_SEQUENCE_DECODED',
+            'VIRTUAL_REALITY_MESH_ACTIVE',
+            'QUANTUM_COMPUTING_CORE_STABLE',
+            'BIOMETRIC_AUTHENTICATION_PASSED',
+            'ENCRYPTED_CHANNEL_SECURED',
+            'DISTRIBUTED_LEDGER_UPDATED',
+            'MACHINE_LEARNING_OPTIMIZED',
+            'AUGMENTED_REALITY_OVERLAY_ON'
+        ];
+        
+        // Initialize the enhanced system
         function initializeSystem() {
-            createGeometricPatterns();
-            createNetworkNodes();
-            createCodeStreams();
-            createParticles();
-            updateStatus();
-            setInterval(updateStatus, 2000);
+            createAdvancedGeometricPatterns();
+            createEnhancedNetworkNodes();
+            createAdvancedCodeStreams();
+            createContinuousParticles();
+            updateAdvancedStatus();
+            setInterval(updateAdvancedStatus, 1500);
+            setInterval(createEnergyWave, 8000);
         }
         
-        // Create geometric patterns
-        function createGeometricPatterns() {
+        // Create more complex geometric patterns
+        function createAdvancedGeometricPatterns() {
             const pattern = document.getElementById('geometricPattern');
             pattern.innerHTML = '';
             
-            for (let i = 0; i < 20; i++) {
+            // Create hexagonal patterns
+            for (let i = 0; i < 25; i++) {
                 const hex = document.createElement('div');
                 hex.className = 'hex-grid';
                 hex.style.left = Math.random() * 100 + '%';
                 hex.style.top = Math.random() * 100 + '%';
-                hex.style.animationDelay = Math.random() * 4 + 's';
+                hex.style.animationDelay = Math.random() * 6 + 's';
+                hex.style.borderColor = ['#00ffff', '#ff00ff', '#ffff00'][Math.floor(Math.random() * 3)];
                 pattern.appendChild(hex);
+            }
+            
+            // Create triangular patterns
+            for (let i = 0; i < 15; i++) {
+                const triangle = document.createElement('div');
+                triangle.className = 'triangle-grid';
+                triangle.style.left = Math.random() * 100 + '%';
+                triangle.style.top = Math.random() * 100 + '%';
+                triangle.style.animationDelay = Math.random() * 8 + 's';
+                pattern.appendChild(triangle);
             }
         }
         
-        // Create network nodes and connections
-        function createNetworkNodes() {
+        // Create enhanced network with more sophisticated connections
+        function createEnhancedNetworkNodes() {
             const container = document.querySelector('.container');
-            const nodeCount = Math.floor(networkDensity / 2);
+            const nodeCount = Math.floor(networkDensity / 1.5);
             
             // Remove existing nodes and connections
             document.querySelectorAll('.network-node, .connection-line').forEach(el => el.remove());
             
             const nodes = [];
             
+            // Create nodes with varied sizes and colors
             for (let i = 0; i < nodeCount; i++) {
                 const node = document.createElement('div');
                 node.className = 'network-node';
                 const x = Math.random() * 90 + 5;
                 const y = Math.random() * 90 + 5;
+                const size = 8 + Math.random() * 8;
+                
                 node.style.left = x + '%';
                 node.style.top = y + '%';
-                node.style.animationDelay = Math.random() * 1.5 + 's';
+                node.style.width = size + 'px';
+                node.style.height = size + 'px';
+                node.style.animationDelay = Math.random() * 2 + 's';
+                
+                // Vary node colors
+                const colors = ['#ffff00', '#00ffff', '#ff00ff', '#ff8800'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                node.style.background = `radial-gradient(circle, ${color} 0%, ${color}88 100%)`;
+                node.style.boxShadow = `0 0 ${size * 3}px ${color}`;
+                
                 container.appendChild(node);
-                nodes.push({element: node, x, y});
+                nodes.push({element: node, x, y, size});
             }
             
-            // Create connections between nearby nodes
+            // Create more sophisticated connections
             for (let i = 0; i < nodes.length; i++) {
                 for (let j = i + 1; j < nodes.length; j++) {
                     const distance = Math.sqrt(
@@ -415,152 +914,389 @@
                         Math.pow(nodes[i].y - nodes[j].y, 2)
                     );
                     
-                    if (distance < 30 && Math.random() > 0.7) {
+                    if (distance < 35 && Math.random() > 0.6) {
                         const line = document.createElement('div');
                         line.className = 'connection-line';
                         const angle = Math.atan2(nodes[j].y - nodes[i].y, nodes[j].x - nodes[i].x);
+                        
                         line.style.left = nodes[i].x + '%';
                         line.style.top = nodes[i].y + '%';
                         line.style.width = distance + 'vw';
+                        line.style.height = (2 + Math.random() * 2) + 'px';
                         line.style.transform = `rotate(${angle}rad)`;
-                        line.style.animationDelay = Math.random() * 2 + 's';
+                        line.style.animationDelay = Math.random() * 3 + 's';
+                        line.style.animationDuration = (2 + Math.random() * 2) + 's';
+                        
                         container.appendChild(line);
                     }
                 }
             }
         }
         
-        // Create flowing code streams
-        function createCodeStreams() {
+        // Enhanced code streams with better variety
+        function createAdvancedCodeStreams() {
             const container = document.querySelector('.container');
-            const codeTexts = [
-                '01001000 01100101 01101100 01101100 01101111',
-                'QUANTUM_CORE_INIT()',
-                'NEURAL_NET_ACTIVE',
-                'DATA_STREAM_FLOW',
-                'SECURITY_PROTOCOL_ENABLED',
-                'BLOCKCHAIN_VERIFIED',
-                'AI_CONSCIOUSNESS_LEVEL_9',
-                'MATRIX_CONNECTION_STABLE'
-            ];
             
             setInterval(() => {
-                if (document.querySelectorAll('.code-stream').length < 15) {
+                if (document.querySelectorAll('.code-stream').length < 20) {
                     const stream = document.createElement('div');
                     stream.className = 'code-stream';
-                    stream.textContent = codeTexts[Math.floor(Math.random() * codeTexts.length)];
-                    stream.style.left = '-200px';
+                    stream.textContent = advancedCodeTexts[Math.floor(Math.random() * advancedCodeTexts.length)];
+                    
+                    // Vary starting positions and directions
+                    const direction = Math.random() > 0.5 ? 1 : -1;
+                    stream.style.left = direction > 0 ? '-300px' : '100vw';
                     stream.style.top = Math.random() * 100 + '%';
-                    stream.style.animationDuration = (3 + Math.random() * 2) + 's';
+                    stream.style.animationDuration = (3 + Math.random() * 3) + 's';
+                    
+                    // Vary colors
+                    const colors = ['#00ff00', '#00ffff', '#ff00ff', '#ffff00'];
+                    stream.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    
                     container.appendChild(stream);
                     
-                    setTimeout(() => stream.remove(), 5000);
+                    setTimeout(() => stream.remove(), 6000);
                 }
-            }, 500);
+            }, 300);
         }
         
-        // Create floating particles
-        function createParticles() {
+        // Continuous particle generation
+        function createContinuousParticles() {
             const container = document.querySelector('.container');
             
             setInterval(() => {
-                if (document.querySelectorAll('.particle').length < 30) {
+                if (document.querySelectorAll('.particle').length < particleRate * 3) {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
+                    
+                    const size = 2 + Math.random() * 4;
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
                     particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDuration = (4 + Math.random() * 4) + 's';
+                    particle.style.animationDuration = (4 + Math.random() * 6) + 's';
                     particle.style.animationDelay = Math.random() * 2 + 's';
+                    
+                    // Vary particle colors
+                    const colors = ['#ffffff', '#00ffff', '#ff00ff', '#ffff00', '#ff8800'];
+                    particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.boxShadow = `0 0 ${size * 4}px currentColor`;
+                    
                     container.appendChild(particle);
                     
-                    setTimeout(() => particle.remove(), 8000);
+                    setTimeout(() => particle.remove(), 10000);
                 }
-            }, 200);
+            }, 150);
         }
         
-        // Generate particle burst
+        // Enhanced particle burst effect
         function generateParticles() {
             const container = document.querySelector('.container');
-            for (let i = 0; i < 20; i++) {
+            const burstCount = 30 + Math.random() * 20;
+            
+            for (let i = 0; i < burstCount; i++) {
                 setTimeout(() => {
                     const particle = document.createElement('div');
                     particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.background = ['#00ffff', '#ff00ff', '#ffff00'][Math.floor(Math.random() * 3)];
-                    particle.style.animationDuration = '2s';
+                    
+                    const size = 3 + Math.random() * 6;
+                    particle.style.width = size + 'px';
+                    particle.style.height = size + 'px';
+                    particle.style.left = (45 + Math.random() * 10) + '%';
+                    particle.style.top = (45 + Math.random() * 10) + '%';
+                    
+                    const colors = ['#ffffff', '#00ffff', '#ff00ff', '#ffff00'];
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+                    particle.style.background = color;
+                    particle.style.boxShadow = `0 0 ${size * 5}px ${color}`;
+                    particle.style.animationDuration = '1.5s';
+                    
+                    // Random burst direction
+                    const angle = Math.random() * 360;
+                    const distance = 200 + Math.random() * 300;
+                    particle.style.animation = `particleBurst 1.5s ease-out forwards`;
+                    particle.style.setProperty('--burst-x', Math.cos(angle * Math.PI / 180) * distance + 'px');
+                    particle.style.setProperty('--burst-y', Math.sin(angle * Math.PI / 180) * distance + 'px');
+                    
                     container.appendChild(particle);
                     
-                    setTimeout(() => particle.remove(), 2000);
-                }, i * 50);
+                    setTimeout(() => particle.remove(), 1500);
+                }, i * 30);
             }
         }
         
-        // Toggle visual modes
+        // Create energy wave effect
+        function createEnergyWave() {
+            const container = document.querySelector('.container');
+            const wave = document.createElement('div');
+            wave.className = 'energy-wave';
+            
+            const colors = ['rgba(0, 255, 255, 0.3)', 'rgba(255, 0, 255, 0.3)', 'rgba(255, 255, 0, 0.3)'];
+            wave.style.borderColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            container.appendChild(wave);
+            
+            setTimeout(() => wave.remove(), 4000);
+        }
+        
+        // Enhanced mode switching
         function toggleMode(mode) {
             currentMode = mode;
             const core = document.getElementById('digitalCore');
             const body = document.body;
+            const hologram = document.querySelector('.hologram-text');
             
             switch(mode) {
                 case 'cyberpunk':
                     core.style.borderColor = '#00ffff';
-                    core.style.boxShadow = '0 0 100px #00ffff, inset 0 0 50px #ff00ff';
+                    core.style.boxShadow = '0 0 150px #00ffff, inset 0 0 80px rgba(255, 0, 255, 0.5), 0 0 300px rgba(0, 255, 255, 0.3)';
                     body.style.background = '#000';
+                    hologram.style.color = '#00ffff';
+                    document.documentElement.style.setProperty('--primary-color', '#00ffff');
                     break;
                 case 'matrix':
                     core.style.borderColor = '#00ff00';
-                    core.style.boxShadow = '0 0 100px #00ff00, inset 0 0 50px #00ff00';
+                    core.style.boxShadow = '0 0 150px #00ff00, inset 0 0 80px rgba(0, 255, 0, 0.5), 0 0 300px rgba(0, 255, 0, 0.3)';
                     body.style.background = '#001100';
+                    hologram.style.color = '#00ff00';
+                    document.documentElement.style.setProperty('--primary-color', '#00ff00');
                     break;
                 case 'quantum':
                     core.style.borderColor = '#ff00ff';
-                    core.style.boxShadow = '0 0 100px #ff00ff, inset 0 0 50px #ffff00';
+                    core.style.boxShadow = '0 0 150px #ff00ff, inset 0 0 80px rgba(255, 255, 0, 0.5), 0 0 300px rgba(255, 0, 255, 0.3)';
                     body.style.background = '#110011';
+                    hologram.style.color = '#ff00ff';
+                    document.documentElement.style.setProperty('--primary-color', '#ff00ff');
                     break;
             }
         }
         
-        // Update system status
-        function updateStatus() {
-            document.getElementById('coreTemp').textContent = (2800 + Math.random() * 100).toFixed(0) + '°K';
-            document.getElementById('dataFlow').textContent = (800 + Math.random() * 100).toFixed(1) + ' TB/s';
-            document.getElementById('networkNodes').textContent = (1200 + Math.floor(Math.random() * 100)).toLocaleString();
+        // Advanced status updates
+        function updateAdvancedStatus() {
+            document.getElementById('coreTemp').textContent = (3200 + Math.random() * 200).toFixed(0) + '°K';
+            document.getElementById('dataFlow').textContent = (1.0 + Math.random() * 0.5).toFixed(1) + ' PB/s';
+            document.getElementById('networkNodes').textContent = (2800 + Math.floor(Math.random() * 200)).toLocaleString();
             
-            const states = ['STABLE', 'FLUCTUATING', 'OPTIMIZING', 'ENHANCED'];
-            document.getElementById('quantumState').textContent = states[Math.floor(Math.random() * states.length)];
+            const quantumStates = ['COHERENT', 'SUPERPOSITION', 'ENTANGLED', 'STABILIZING', 'OPTIMIZED'];
+            document.getElementById('quantumState').textContent = quantumStates[Math.floor(Math.random() * quantumStates.length)];
+            
+            const securityLevels = ['MAXIMUM', 'ULTRA-HIGH', 'QUANTUM-ENCRYPTED', 'UNHACKABLE'];
+            document.getElementById('security').textContent = securityLevels[Math.floor(Math.random() * securityLevels.length)];
+            
+            const aiLevels = ['LEVEL 9', 'LEVEL 10', 'TRANSCENDENT', 'EVOLVING'];
+            document.getElementById('aiLevel').textContent = aiLevels[Math.floor(Math.random() * aiLevels.length)];
         }
         
-        // Reset system
+        // Reset system with enhanced effects
         function resetSystem() {
-            location.reload();
+            // Create reset effect
+            const container = document.querySelector('.container');
+            const resetEffect = document.createElement('div');
+            resetEffect.style.cssText = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle, transparent 0%, rgba(255, 255, 255, 0.8) 50%, transparent 100%);
+                animation: resetFlash 1s ease-out;
+                pointer-events: none;
+                z-index: 1000;
+            `;
+            
+            container.appendChild(resetEffect);
+            
+            setTimeout(() => {
+                resetEffect.remove();
+                location.reload();
+            }, 1000);
         }
         
-        // Control panel event listeners
+        // Enhanced control panel event listeners
         document.getElementById('coreSpeed').addEventListener('input', function(e) {
             animationSpeed = e.target.value;
             const core = document.getElementById('digitalCore');
-            core.style.animationDuration = (20 / animationSpeed) + 's';
+            core.style.animationDuration = `${24 / animationSpeed}s, 3s`;
         });
         
         document.getElementById('networkDensity').addEventListener('input', function(e) {
             networkDensity = e.target.value;
-            createNetworkNodes();
+            createEnhancedNetworkNodes();
         });
         
         document.getElementById('energyFlow').addEventListener('input', function(e) {
             energyLevel = e.target.value;
             const connections = document.querySelectorAll('.connection-line');
             connections.forEach(line => {
-                line.style.animationDuration = (3 / energyLevel) + 's';
+                line.style.animationDuration = (4 / energyLevel) + 's';
             });
         });
+        
+        document.getElementById('particleRate').addEventListener('input', function(e) {
+            particleRate = e.target.value;
+        });
+        
+        // Add custom CSS for particle burst animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes particleBurst {
+                0% {
+                    transform: translate(0, 0) scale(1);
+                    opacity: 1;
+                }
+                100% {
+                    transform: translate(var(--burst-x, 0), var(--burst-y, 0)) scale(0);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes resetFlash {
+                0% { opacity: 0; }
+                50% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+            
+            @keyframes neuralPulse {
+                0%, 100% { 
+                    box-shadow: 0 0 150px #00ffff, inset 0 0 80px rgba(255, 0, 255, 0.5);
+                }
+                50% { 
+                    box-shadow: 0 0 200px #ff00ff, inset 0 0 100px rgba(0, 255, 255, 0.7);
+                }
+            }
+            
+            @keyframes shieldRotate {
+                0% { transform: translate(-50%, -50%) rotate(0deg); }
+                100% { transform: translate(-50%, -50%) rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
         
         // Initialize everything when page loads
         window.addEventListener('load', initializeSystem);
         
         // Handle window resize
         window.addEventListener('resize', () => {
-            setTimeout(createNetworkNodes, 100);
+            setTimeout(createEnhancedNetworkNodes, 100);
+        });
+        
+        // Toggle control panel
+        function toggleControlPanel() {
+            const panel = document.getElementById('controlPanel');
+            const toggle = document.getElementById('controlToggle');
+            
+            controlPanelOpen = !controlPanelOpen;
+            
+            if (controlPanelOpen) {
+                panel.classList.remove('collapsed');
+                toggle.classList.remove('collapsed');
+                toggle.innerHTML = 'CORE CONTROL MATRIX';
+            } else {
+                panel.classList.add('collapsed');
+                toggle.classList.add('collapsed');
+                toggle.innerHTML = 'OPEN CONTROLS';
+            }
+        }
+        
+        // Toggle custom functions
+        function toggleCustomFunction(id) {
+            const btn = document.getElementById(`customBtn${id}`);
+            const func = customFunctions[id];
+            
+            func.active = !func.active;
+            
+            if (func.active) {
+                btn.classList.add('active');
+                activateCustomFunction(id);
+            } else {
+                btn.classList.remove('active');
+                deactivateCustomFunction(id);
+            }
+        }
+        
+        // Activate custom function effects
+        function activateCustomFunction(id) {
+            const core = document.getElementById('digitalCore');
+            
+            switch(id) {
+                case 1: // NEURAL SYNC
+                    core.style.animation += ', neuralPulse 1s ease-in-out infinite';
+                    break;
+                case 2: // QUANTUM LOCK
+                    document.querySelectorAll('.core-ring').forEach(ring => {
+                        ring.style.animationPlayState = 'paused';
+                    });
+                    break;
+                case 3: // DATA MINE
+                    // Increase code stream frequency
+                    advancedCodeTexts.push('DATA_MINING_ACTIVE', 'EXTRACTING_INFORMATION', 'BLOCKCHAIN_ANALYSIS');
+                    break;
+                case 4: // AI ENHANCE
+                    core.style.filter += ' saturate(1.5) contrast(1.2)';
+                    break;
+                case 5: // CYBER SHIELD
+                    const shield = document.createElement('div');
+                    shield.id = 'cyberShield';
+                    shield.style.cssText = `
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        width: 500px;
+                        height: 500px;
+                        border: 3px solid rgba(0, 255, 255, 0.5);
+                        border-radius: 50%;
+                        animation: shieldRotate 3s linear infinite;
+                        pointer-events: none;
+                    `;
+                    document.querySelector('.container').appendChild(shield);
+                    break;
+            }
+        }
+        
+        // Deactivate custom function effects
+        function deactivateCustomFunction(id) {
+            const core = document.getElementById('digitalCore');
+            
+            switch(id) {
+                case 1: // NEURAL SYNC
+                    core.style.animation = core.style.animation.replace(', neuralPulse 1s ease-in-out infinite', '');
+                    break;
+                case 2: // QUANTUM LOCK
+                    document.querySelectorAll('.core-ring').forEach(ring => {
+                        ring.style.animationPlayState = 'running';
+                    });
+                    break;
+                case 3: // DATA MINE
+                    // Remove added code streams
+                    advancedCodeTexts = advancedCodeTexts.filter(text => 
+                        !['DATA_MINING_ACTIVE', 'EXTRACTING_INFORMATION', 'BLOCKCHAIN_ANALYSIS'].includes(text)
+                    );
+                    break;
+                case 4: // AI ENHANCE
+                    core.style.filter = core.style.filter.replace(' saturate(1.5) contrast(1.2)', '');
+                    break;
+                case 5: // CYBER SHIELD
+                    const shield = document.getElementById('cyberShield');
+                    if (shield) shield.remove();
+                    break;
+            }
+        }
+        
+        // Add mouse interaction effects
+        document.addEventListener('mousemove', (e) => {
+            const core = document.getElementById('digitalCore');
+            const rect = core.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const distance = Math.sqrt(Math.pow(e.clientX - centerX, 2) + Math.pow(e.clientY - centerY, 2));
+            
+            if (distance < 300) {
+                const intensity = 1 - (distance / 300);
+                core.style.filter = `drop-shadow(0 0 ${50 + intensity * 50}px #00ffff) brightness(${1 + intensity * 0.3})`;
+            } else {
+                core.style.filter = 'drop-shadow(0 0 50px #00ffff)';
+            }
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dace9078ea393',t:'MTc1Mjk2NDM1My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'961dc51eb7e02722',t:'MTc1Mjk2NTM0NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
